@@ -1,3 +1,5 @@
+import os
+import stat
 import zipfile
 import requests
 import tempfile
@@ -17,4 +19,8 @@ with tempfile.TemporaryDirectory() as temp_dir:
     print("File downloaded at " + file_path)
     with zipfile.ZipFile(file_path) as item:
         item.extractall()
+    print("Extracted files")
+    st = os.stat('tarql-1.2/bin/tarql')
+    os.chmod('tarql-1.2/bin/tarql', st.st_mode | stat.S_IEXEC)
+    print("Giving execution permissions to tarql executable")
     print("Done")
